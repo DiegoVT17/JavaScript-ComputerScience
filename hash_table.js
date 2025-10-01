@@ -58,6 +58,50 @@ class HashMap {
 		return false;
 	}
 
+	clear() {
+		this.buckets = Array.from({ length: this.size }, () => []);
+	}
+
+	keys() {
+		const keys = [];
+
+		for (const bucket of this.buckets) {
+			for (const [key] of bucket) {
+				keys.push(key);
+			}
+		}
+
+		return keys;
+	}
+
+	entries() {
+		const entries = [];
+
+		for (const bucket of this.buckets) {
+			for (const [key, value] of bucket) {
+				entries.push([key, value]);
+			}
+		}
+
+		return entries;
+	}
+
+	values() {
+		const values = [];
+
+		for (const bucket of this.buckets) {
+			for (const [_, value] of bucket) {
+				values.push(value);
+			}
+		}
+
+		return values;
+	}
+
+	length() {
+		return this.entries().length;
+	}
+
 	printItems(buckets, i = 0) {
 		if (i === buckets.length) return;
 
@@ -75,12 +119,19 @@ hashMap.setItem("name", "Rafael");
 hashMap.setItem("age", 36);
 hashMap.setItem("color", "black");
 hashMap.setItem("song-name", "deep inside");
+hashMap.setItem("band", "alter bridge");
 
-hashMap.printItems(hashMap.buckets);
+// hashMap.printItems(hashMap.buckets);
 
-console.log(hashMap.getItem("song-name"));
-console.log(hashMap.has("song-name"));
+// console.log(hashMap.getItem("song-name"));
+// console.log(hashMap.has("song-name"));
 console.log(hashMap.removeItem("song-name"));
+console.log(hashMap.removeItem("age"));
+console.log(hashMap.removeItem("age"));
 
-hashMap.printItems(hashMap.buckets);
+// hashMap.printItems(hashMap.buckets);
 
+console.log(hashMap.keys());
+console.log(hashMap.values());
+console.log(hashMap.entries());
+console.log(hashMap.length());
