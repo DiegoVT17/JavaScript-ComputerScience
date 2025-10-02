@@ -1,117 +1,117 @@
 class HashMap {
-	constructor(size = 50) {
-		this.buckets = Array.from({ length: size }, () => []);
-		this.size = size;
-	}
+  constructor(size = 50) {
+    this.buckets = Array.from({ length: size }, () => []);
+    this.size = size;
+  }
 
-	hash(key) {
-		let hashCode = 0;
-		const primeNumber = 31;
+  hash(key) {
+    let hashCode = 0;
+    const primeNumber = 31;
 
-		for (let i = 0; i < key.length; i++) {
-			hashCode = primeNumber * hashCode + key.charCodeAt(i);
-		}
+    for (let i = 0; i < key.length; i++) {
+      hashCode = primeNumber * hashCode + key.charCodeAt(i);
+    }
 
-		return hashCode % this.size;
-	}
+    return hashCode % this.size;
+  }
 
-	setItem(key, value) {
-		const index = this.hash(key);
-		const bucket = this.buckets[index];
+  setItem(key, value) {
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
 
-		for (const pair of bucket) {
-			if (pair[0] === key) {
-				pair[1] = value;
-				return;
-			}
-		}
+    for (const pair of bucket) {
+      if (pair[0] === key) {
+        pair[1] = value;
+        return;
+      }
+    }
 
-		bucket.push([key, value]);
-	}
+    bucket.push([key, value]);
+  }
 
-	getItem(key) {
-		const index = this.hash(key);
-		const bucket = this.buckets[index];
+  getItem(key) {
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
 
-		for (const pair of bucket) {
-			if (pair[0] === key) return pair[1];
-		}
+    for (const pair of bucket) {
+      if (pair[0] === key) return pair[1];
+    }
 
-		return undefined;
-	}
+    return undefined;
+  }
 
-	has(key) {
-		return this.getItem(key) !== undefined;
-	}
+  has(key) {
+    return this.getItem(key) !== undefined;
+  }
 
-	removeItem(key) {
-		const index = this.hash(key);
-		const bucket = this.buckets[index];
+  removeItem(key) {
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
 
-		for (let i = 0; i < bucket.length; i++) {
-			if (bucket[i][0] === key) {
-				bucket.splice(i, 1);
-				return true;
-			}
-		}
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        bucket.splice(i, 1);
+        return true;
+      }
+    }
 
-		return false;
-	}
+    return false;
+  }
 
-	clear() {
-		this.buckets = Array.from({ length: this.size }, () => []);
-	}
+  clear() {
+    this.buckets = Array.from({ length: this.size }, () => []);
+  }
 
-	keys() {
-		const keys = [];
+  keys() {
+    const keys = [];
 
-		for (const bucket of this.buckets) {
-			for (const [key] of bucket) {
-				keys.push(key);
-			}
-		}
+    for (const bucket of this.buckets) {
+      for (const [key] of bucket) {
+        keys.push(key);
+      }
+    }
 
-		return keys;
-	}
+    return keys;
+  }
 
-	entries() {
-		const entries = [];
+  entries() {
+    const entries = [];
 
-		for (const bucket of this.buckets) {
-			for (const [key, value] of bucket) {
-				entries.push([key, value]);
-			}
-		}
+    for (const bucket of this.buckets) {
+      for (const [key, value] of bucket) {
+        entries.push([key, value]);
+      }
+    }
 
-		return entries;
-	}
+    return entries;
+  }
 
-	values() {
-		const values = [];
+  values() {
+    const values = [];
 
-		for (const bucket of this.buckets) {
-			for (const [_, value] of bucket) {
-				values.push(value);
-			}
-		}
+    for (const bucket of this.buckets) {
+      for (const [_, value] of bucket) {
+        values.push(value);
+      }
+    }
 
-		return values;
-	}
+    return values;
+  }
 
-	length() {
-		return this.entries().length;
-	}
+  length() {
+    return this.entries().length;
+  }
 
-	printItems(buckets, i = 0) {
-		if (i === buckets.length) return;
+  printItems(buckets, i = 0) {
+    if (i === buckets.length) return;
 
-		const bucket = buckets[i];
-		for (const [key, value] of bucket) {
-			console.log({ key, value });
-		}
+    const bucket = buckets[i];
+    for (const [key, value] of bucket) {
+      console.log({ key, value });
+    }
 
-		this.printItems(buckets, i + 1);
-	}
+    this.printItems(buckets, i + 1);
+  }
 }
 
 const hashMap = new HashMap(20);
